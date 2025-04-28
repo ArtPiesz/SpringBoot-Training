@@ -18,13 +18,6 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-   /* public UserDTO getUserById(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-
-        return UserMapper.INSTANCE.userToUserDTO(user);
-    }*/
     public void registerUser(RegisterRequestDTO registerRequestDTO){
         if(userRepository.findByEmail(registerRequestDTO.getEmail()).isPresent()){
             throw new RuntimeException("Email is already in use");
@@ -33,7 +26,10 @@ public class UserService {
         User user= new User(
                 registerRequestDTO.getUsername(),
                 registerRequestDTO.getEmail(),
-                registerRequestDTO.getPassword()
+                passwordEncoder.encode(registerRequestDTO.getPassword())
+
+
+
         );
 
         userRepository.save(user);
@@ -42,9 +38,9 @@ public class UserService {
     public boolean loginUser(LoginRequestDTO loginRequestDTO){
 
         User user = userRepository.findByEmail(loginRequestDTO.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));;
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return passwordEncoder.matches(loginRequestDTO.getPassword(),user.getEmail());
+        return passwordEncoder.matches(loginRequestDTO.getPassword(),user.getPassword());
     }
 
 
