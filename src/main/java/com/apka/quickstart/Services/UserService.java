@@ -35,13 +35,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public boolean loginUser(LoginRequestDTO loginRequestDTO){
 
-        User user = userRepository.findByEmail(loginRequestDTO.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return passwordEncoder.matches(loginRequestDTO.getPassword(),user.getPassword());
-    }
 
 
 }
