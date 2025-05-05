@@ -59,4 +59,12 @@ public class TravelPlanRequestDTO {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

@@ -1,6 +1,9 @@
 package com.apka.quickstart.Services;
 
 import com.apka.quickstart.DTO.RegisterRequestDTO;
+import com.apka.quickstart.DTO.TravelPlanMapper;
+import com.apka.quickstart.DTO.TravelPlanRequestDTO;
+import com.apka.quickstart.DTO.UserMapper;
 import com.apka.quickstart.model.TravelPlan;
 import com.apka.quickstart.model.User;
 import com.apka.quickstart.repository.TravelPlanRepository;
@@ -15,10 +18,12 @@ import java.util.List;
 public class TravelPlanService {
     private final TravelPlanRepository travelPlanRepository;
     private final UserRepository userRepository;
-    public TravelPlan createPlan(TravelPlan plan, Long userId) {
-        User user = userRepository.findById(userId)
+
+    private final TravelPlanMapper travelPlanMapper;
+    public TravelPlan createPlan(TravelPlanRequestDTO planRequestDTO) {
+        User user = userRepository.findById(planRequestDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        plan.setUser(user);
+        TravelPlan plan = travelPlanMapper.TravelPlanRequestToPlan(planRequestDTO,user);
         return travelPlanRepository.save(plan);
     }
 
@@ -34,13 +39,13 @@ public class TravelPlanService {
     public void deletePlan(Long planId){
         travelPlanRepository.deleteById(planId);
     }
-    public TravelPlan updatePlan(Long planId, TravelPlan updatedPlan) {
+    public TravelPlan updatePlan(Long planId, TravelPlanRequestDTO updatedPlanDTO) {
         TravelPlan existingPlan = getPlanById(planId);
-        existingPlan.setTitle(updatedPlan.getTitle());
-        existingPlan.setDescription(updatedPlan.getDescription());
-        existingPlan.setDestination(updatedPlan.getDescription());
-        existingPlan.setStartDate(updatedPlan.getStartDate());
-        existingPlan.setEndDate(updatedPlan.getEndDate());
+        existingPlan.setTitle(updatedPlanDTO.getTitle());
+        existingPlan.setDescription(updatedPlanDTO.getDescription());
+        existingPlan.setDestination(updatedPlanDTO.getDescription());
+        existingPlan.setStartDate(updatedPlanDTO.getStartDate());
+        existingPlan.setEndDate(updatedPlanDTO.getEndDate());
         return travelPlanRepository.save(existingPlan);
     }
     }
