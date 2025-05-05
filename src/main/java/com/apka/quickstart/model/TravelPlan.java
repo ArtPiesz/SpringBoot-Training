@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Data
 @Builder
@@ -17,8 +19,11 @@ public class TravelPlan {
     private long id;
     private String title;
     private String description;
-    private String StartDate;
-    private String endDate;
+    private String destination;
+    private LocalDate startDate;
+
+    private LocalDate endDate;
+    private LocalDate createdAt = LocalDate.now();
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

@@ -23,11 +23,11 @@ import java.util.stream.Collectors;
 @Table(name = "users")
 public class User implements UserDetails {
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password,String role) {
         this.username = username;
         this.email = email;
         this.password = password;
-
+        this.role = password;
     }
 
     @Id
@@ -38,17 +38,9 @@ public class User implements UserDetails {
 
     private String email;
     private String password;
+    private String role;
 
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-    }
     @Override
     public String toString() {
         return "User{" +
@@ -83,6 +75,8 @@ public class User implements UserDetails {
         this.email = email;
     }
 
+
+
     public String getPassword() {
         return password;
     }
@@ -92,9 +86,16 @@ public class User implements UserDetails {
     }
 
 
+    public String getRole() {
+        return role;
+    }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-
-
-
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
 }

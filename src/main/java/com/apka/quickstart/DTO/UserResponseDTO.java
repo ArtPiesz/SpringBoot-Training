@@ -1,20 +1,15 @@
 package com.apka.quickstart.DTO;
 
-public class UserDTO {
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserResponseDTO {
     private Long id;
     private String username;
     private String email;
-
-
-
-    public UserDTO(Long id, String username, String email) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-    }
-
-
+    private String role;
 
     public Long getId() {
         return id;
@@ -39,4 +34,14 @@ public class UserDTO {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+
 }

@@ -2,7 +2,6 @@ package com.apka.quickstart.controller;
 
 import com.apka.quickstart.DTO.AuthenticationRequest;
 import com.apka.quickstart.DTO.AuthenticationResponse;
-import com.apka.quickstart.DTO.LoginRequestDTO;
 import com.apka.quickstart.DTO.RegisterRequestDTO;
 import com.apka.quickstart.Services.JwtService;
 import com.apka.quickstart.Services.UserService;
@@ -39,7 +38,6 @@ public class AuthController {
         }
     }
 
-    // Endpoint logowania
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
         authenticationManager.authenticate(

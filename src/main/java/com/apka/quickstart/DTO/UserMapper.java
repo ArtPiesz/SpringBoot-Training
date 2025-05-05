@@ -4,10 +4,14 @@ import com.apka.quickstart.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    UserDTO userToUserDTO(User user);
+
+    User registerRequestToUser(RegisterRequestDTO request);
+
+
+    UserResponseDTO userToUserResponse(User user);
 }

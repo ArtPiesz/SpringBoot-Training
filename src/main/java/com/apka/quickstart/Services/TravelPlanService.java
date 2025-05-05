@@ -38,6 +38,7 @@ public class TravelPlanService {
         TravelPlan existingPlan = getPlanById(planId);
         existingPlan.setTitle(updatedPlan.getTitle());
         existingPlan.setDescription(updatedPlan.getDescription());
+        existingPlan.setDestination(updatedPlan.getDescription());
         existingPlan.setStartDate(updatedPlan.getStartDate());
         existingPlan.setEndDate(updatedPlan.getEndDate());
         return travelPlanRepository.save(existingPlan);
