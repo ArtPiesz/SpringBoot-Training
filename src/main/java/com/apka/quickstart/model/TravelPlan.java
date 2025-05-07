@@ -23,7 +23,7 @@ public class TravelPlan {
     private LocalDate startDate;
 
     private LocalDate endDate;
-    private LocalDate createdAt = LocalDate.now();
+    private LocalDate createdAt;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

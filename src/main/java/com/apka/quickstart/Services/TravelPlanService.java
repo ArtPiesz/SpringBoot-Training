@@ -9,8 +9,10 @@ import com.apka.quickstart.model.User;
 import com.apka.quickstart.repository.TravelPlanRepository;
 import com.apka.quickstart.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -21,9 +23,11 @@ public class TravelPlanService {
 
     private final TravelPlanMapper travelPlanMapper;
     public TravelPlan createPlan(TravelPlanRequestDTO planRequestDTO) {
-        User user = userRepository.findById(planRequestDTO.getUserId())
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         TravelPlan plan = travelPlanMapper.TravelPlanRequestToPlan(planRequestDTO,user);
+        plan.setCreatedAt(LocalDate.now());
         return travelPlanRepository.save(plan);
     }
 
