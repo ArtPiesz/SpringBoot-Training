@@ -1,6 +1,6 @@
 package com.apka.quickstart.config;
 
-import com.apka.quickstart.Services.CustomUserDetailsService;
+
 import com.apka.quickstart.Services.JwtService;
 import com.apka.quickstart.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -56,7 +56,6 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService());
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
@@ -71,9 +70,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService();
-    }
+
 }
 
