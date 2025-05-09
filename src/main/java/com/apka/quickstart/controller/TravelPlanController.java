@@ -26,15 +26,15 @@ public class TravelPlanController {
         }
     }
     @GetMapping
-    public ResponseEntity<List<TravelPlan>> getAllPlans(@RequestBody TravelPlanRequestDTO travelPlanRequestDTO){
+    public ResponseEntity<List<TravelPlan>> getAllPlans(){
         try {
-           List<TravelPlan> userPlans = travelPlanService.getAllPlansForUser(travelPlanRequestDTO.getUserId());
+           List<TravelPlan> userPlans = travelPlanService.getAllPlansForUser();
             return ResponseEntity.ok(userPlans);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-    @GetMapping("/{id}")
+    @GetMapping("/{planId}")
     public ResponseEntity<TravelPlan> getPlan(@PathVariable long planId){
         try {
             TravelPlan travelPlan = travelPlanService.getPlanById(planId);
@@ -44,7 +44,7 @@ public class TravelPlanController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{planId}")
     public ResponseEntity<TravelPlan> updatePlan(@RequestBody TravelPlanRequestDTO travelPlanRequestDTO, @PathVariable long planId) {
         try {
             TravelPlan travelPlan = travelPlanService.updatePlan(planId,travelPlanRequestDTO);
@@ -55,8 +55,8 @@ public class TravelPlanController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePlan(@RequestBody TravelPlanRequestDTO travelPlanRequestDTO, @PathVariable long planId){
+    @DeleteMapping("/{planId}")
+    public ResponseEntity<String> deletePlan(@PathVariable long planId){
         try {
             travelPlanService.deletePlan(planId);
             return ResponseEntity.ok("Travel plan deleted successfully");

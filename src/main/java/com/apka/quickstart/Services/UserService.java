@@ -5,6 +5,7 @@ import com.apka.quickstart.DTO.UserMapper;
 import com.apka.quickstart.DTO.UserResponseDTO;
 import com.apka.quickstart.model.User;
 import com.apka.quickstart.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -33,7 +34,12 @@ public class UserService {
         return userMapper.userToUserResponse(user);
     }
 
-
+public User getUserFromContext(){
+    String email = SecurityContextHolder.getContext().getAuthentication().getName();
+    User user = userRepository.findByUsername(email)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+    return user;
+}
 
 
 

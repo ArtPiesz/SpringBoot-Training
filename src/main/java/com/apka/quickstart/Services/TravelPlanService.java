@@ -8,9 +8,11 @@ import com.apka.quickstart.model.TravelPlan;
 import com.apka.quickstart.model.User;
 import com.apka.quickstart.repository.TravelPlanRepository;
 import com.apka.quickstart.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,37 +21,38 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TravelPlanService {
     private final TravelPlanRepository travelPlanRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     private final TravelPlanMapper travelPlanMapper;
+    @Transactional
     public TravelPlan createPlan(TravelPlanRequestDTO planRequestDTO) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findByUsername(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userService.getUserFromContext();
         TravelPlan plan = travelPlanMapper.TravelPlanRequestToPlan(planRequestDTO,user);
         plan.setCreatedAt(LocalDate.now());
+        plan.setUser(user);
         return travelPlanRepository.save(plan);
     }
 
-    public List<TravelPlan> getAllPlansForUser(Long userId){
-        return travelPlanRepository.findByUserId(userId);
+    public List<TravelPlan> getAllPlansForUser(){
+        User user = userService.getUserFromContext();
+        return travelPlanRepository.findByUserId(user.getId());
 
         }
     public TravelPlan getPlanById(Long planId){
-    return travelPlanRepository.findById(planId)
-            .orElseThrow(() -> new RuntimeException("Plan not found"));
+    return travelPlanRepository.findPlanById(planId);
+
     }
 
     public void deletePlan(Long planId){
         travelPlanRepository.deleteById(planId);
     }
     public TravelPlan updatePlan(Long planId, TravelPlanRequestDTO updatedPlanDTO) {
-        TravelPlan existingPlan = getPlanById(planId);
-        existingPlan.setTitle(updatedPlanDTO.getTitle());
-        existingPlan.setDescription(updatedPlanDTO.getDescription());
-        existingPlan.setDestination(updatedPlanDTO.getDescription());
-        existingPlan.setStartDate(updatedPlanDTO.getStartDate());
-        existingPlan.setEndDate(updatedPlanDTO.getEndDate());
+
+        TravelPlan existingPlan = travelPlanRepository.findById(planId)
+                .orElseThrow(() -> new EntityNotFoundException("Plan not found with id: " + planId));
+        travelPlanMapper.updateTravelPlanFromDTO(updatedPlanDTO, existingPlan);
+        User user = userService.getUserFromContext();
+        existingPlan.setUser(user);
         return travelPlanRepository.save(existingPlan);
     }
     }

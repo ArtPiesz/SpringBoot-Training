@@ -18,8 +18,8 @@ public class TravelPlanRequestDTO {
     private String destination;
     private LocalDate startDate;
     private LocalDate endDate;
-
     private Long userId;
+
     public String getTitle() {
         return title;
     }
