@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -28,14 +28,46 @@ const RegisterPage = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Rejestracja</h2>
-      <input type="text" name="username" placeholder="Nazwa użytkownika" onChange={handleChange} />
-      <input type="email" name="email" placeholder="Email" onChange={handleChange} />
-      <input type="password" name="password" placeholder="Hasło" onChange={handleChange} />
-      <button type="submit">Zarejestruj się</button>
-    </form>
-  );
-};
+      <Container>
+        <h2>Rejestracja</h2>
+        <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formUsername">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                      type="username"
+                      name="username"
+                      placeholder="Wprowadź username"
+                      value={formData.username}
+                      onChange={handleChange}
+                    />
+        </Form.Group>
+          <Form.Group controlId="formEmail">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              name="email"
+              placeholder="Wprowadź email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Form.Group controlId="formPassword">
+            <Form.Label>Hasło</Form.Label>
+            <Form.Control
+              type="password"
+              name="password"
+              placeholder="Wprowadź hasło"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Button variant="primary" type="submit">Zarejestruj</Button>
+        </Form>
+      </Container>
+    );
+  };
+
 
 export default RegisterPage;
