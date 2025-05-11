@@ -5,22 +5,24 @@ import com.apka.quickstart.DTO.UserMapper;
 import com.apka.quickstart.DTO.UserResponseDTO;
 import com.apka.quickstart.model.User;
 import com.apka.quickstart.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository,BCryptPasswordEncoder passwordEncoder,UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.userMapper = userMapper;
-    }
+
 
     public UserResponseDTO registerUser(RegisterRequestDTO registerRequest){
         User user = userMapper.registerRequestToUser(registerRequest);

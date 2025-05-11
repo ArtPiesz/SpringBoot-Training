@@ -86,11 +86,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.apka</groupId>
-			<artifactId>quickstart</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>

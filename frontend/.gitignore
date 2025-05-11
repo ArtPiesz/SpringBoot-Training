@@ -1,23 +1,50 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
+# Root-level ignores (dla całego repo)
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+*.log
+*.env
+node_modules/
+target/
+.idea/
+*.iml
 
+# Maven (backend)
+backend/target/
+backend/.classpath
+backend/.project
+backend/.settings/
+backend/.idea/
+backend/*.iml
+
+# IntelliJ
+*.ipr
+*.iws
+*.iml
+.idea/
+
+# VSCode
+.vscode/
+
+# React (frontend)
+frontend/node_modules/
+frontend/build/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# OS pliki
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+
+# Environment
+.env
+.env.*
