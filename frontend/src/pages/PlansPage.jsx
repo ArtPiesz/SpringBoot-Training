@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Button, Card, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PlansPage = () => {
   const [plans, setPlans] = useState([]);
@@ -21,7 +22,7 @@ const PlansPage = () => {
     };
     fetchPlans();
   }, []);
-
+    const navigate = useNavigate();
     const handleDelete = async (planId) => {
       if (!window.confirm('Czy na pewno chcesz usunąć ten plan?')) return;
 
@@ -41,7 +42,7 @@ const PlansPage = () => {
   return (
      <Container>
        <h2>Plany podróży</h2>
-       <Button variant="primary" as={Link} to="/plans/add">Dodaj nowy plan</Button>
+       <Button variant="primary" as={Link} to="/add">Dodaj nowy plan</Button>
        <Row className="mt-4">
          {plans.map(plan => (
            <Col md={4} key={plan.id} className="mb-4">
@@ -73,6 +74,9 @@ const PlansPage = () => {
            </Col>
          ))}
        </Row>
+       <button className="btn btn-secondary mb-3" onClick={() => navigate('/dashboard')}>
+         ← Powrót do panelu użytkownika
+       </button>
      </Container>
    );
  };

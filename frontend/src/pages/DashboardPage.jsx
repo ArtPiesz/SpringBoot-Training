@@ -1,50 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Container, Button, Card, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom'; // wszystkie importy muszą być na górze pliku
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Container, Button } from 'react-bootstrap';
 
 const DashboardPage = () => {
-  const [plans, setPlans] = useState([]);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchPlans = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:8080/travel-plans', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setPlans(response.data);
-      } catch (err) {
-        console.error('Błąd:', err);
-        alert('Błąd podczas pobierania planów');
-      }
-    };
-    fetchPlans();
-  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
 
   return (
-    <Container>
-      <h2>Dashboard - Plany podróży</h2>
-      <Button variant="primary" as={Link} to="/add">Dodaj plan</Button>
-      <Row className="mt-4">
-        {plans.map(plan => (
-          <Col md={4} key={plan.id} className="mb-4">
-            <Card>
-              <Card.Body>
-                <Card.Title>{plan.title}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">{plan.destination}</Card.Subtitle>
-                <Card.Text>{plan.description}</Card.Text>
-                <Card.Text>
-                  <small>Start: {plan.startDate} - End: {plan.endDate}</small>
-                </Card.Text>
-                <Link to={`/plans/edit/${plan.id}`}>
-                  <Button variant="warning">Edytuj</Button>
-                </Link>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+    <Container className="text-center mt-5">
+      <h2>Panel użytkownika</h2>
+      <Link to="/plans">
+        <Button variant="primary" className="m-2">Moje plany podróży</Button>
+      </Link>
+      <Button variant="danger" onClick={handleLogout}>Wyloguj się</Button>
     </Container>
   );
 };

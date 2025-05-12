@@ -6,17 +6,20 @@ import PlansPage from './pages/PlansPage';
 import EditPlanPage from './pages/EditPlanPage';
 import AddPlanPage from './pages/AddPlanPage';
 import DashboardPage from './pages/DashboardPage';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/plans" element={<PlansPage />} />
         <Route path="/plans/edit/:id" element={<EditPlanPage />} />
         <Route path="/add" element={<AddPlanPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
+
       </Routes>
     </Router>
   );

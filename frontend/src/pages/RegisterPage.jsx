@@ -2,13 +2,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: ''
   });
-
+const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData(prev => ({
       ...prev,
@@ -21,6 +22,7 @@ const RegisterPage = () => {
     try {
       await axios.post('http://localhost:8080/auth/register', formData);
       alert("Rejestracja zakończona sukcesem. Możesz się zalogować.");
+      navigate('/login');
     } catch (err) {
       console.error(err);
       alert("Błąd rejestracji");

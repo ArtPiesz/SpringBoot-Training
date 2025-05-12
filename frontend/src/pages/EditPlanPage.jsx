@@ -129,6 +129,9 @@ const EditPlanPage = () => {
             Zapisz zmiany
           </Button>
         </Form>
+        <button className="btn btn-secondary mb-3" onClick={() => navigate('/plans')} >
+          ← Powrót do planów podróży
+        </button>
       </Container>
     );
   };
